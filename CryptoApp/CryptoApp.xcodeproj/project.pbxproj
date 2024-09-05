@@ -11,6 +11,9 @@
 		96CA7C412C889968003315DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CA7C402C889968003315DD /* ContentView.swift */; };
 		96CA7C432C889970003315DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96CA7C422C889970003315DD /* Assets.xcassets */; };
 		96CA7C462C889970003315DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96CA7C452C889970003315DD /* Preview Assets.xcassets */; };
+		96CA7C4E2C88CDA7003315DD /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 96CA7C4D2C88CDA7003315DD /* Realm */; };
+		96CA7C502C88CDA7003315DD /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 96CA7C4F2C88CDA7003315DD /* RealmSwift */; };
+		96CA7C532C88CE72003315DD /* CryptoAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CA7C522C88CE72003315DD /* CryptoAPI.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,7 @@
 		96CA7C402C889968003315DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		96CA7C422C889970003315DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96CA7C452C889970003315DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		96CA7C522C88CE72003315DD /* CryptoAPI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CryptoAPI.xcframework; path = ../../../../Downloads/Challenge/CryptoAPI.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +30,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96CA7C502C88CDA7003315DD /* RealmSwift in Frameworks */,
+				96CA7C4E2C88CDA7003315DD /* Realm in Frameworks */,
+				96CA7C532C88CE72003315DD /* CryptoAPI.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,6 +44,7 @@
 			children = (
 				96CA7C3D2C889968003315DD /* CryptoApp */,
 				96CA7C3C2C889968003315DD /* Products */,
+				96CA7C512C88CE71003315DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +75,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		96CA7C512C88CE71003315DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				96CA7C522C88CE72003315DD /* CryptoAPI.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -83,6 +99,10 @@
 			dependencies = (
 			);
 			name = CryptoApp;
+			packageProductDependencies = (
+				96CA7C4D2C88CDA7003315DD /* Realm */,
+				96CA7C4F2C88CDA7003315DD /* RealmSwift */,
+			);
 			productName = CryptoApp;
 			productReference = 96CA7C3B2C889968003315DD /* CryptoApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +131,9 @@
 				Base,
 			);
 			mainGroup = 96CA7C322C889968003315DD;
+			packageReferences = (
+				96CA7C4C2C88CDA6003315DD /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = 96CA7C3C2C889968003315DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -344,6 +367,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		96CA7C4C2C88CDA6003315DD /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.53.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		96CA7C4D2C88CDA7003315DD /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96CA7C4C2C88CDA6003315DD /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		96CA7C4F2C88CDA7003315DD /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96CA7C4C2C88CDA6003315DD /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 96CA7C332C889968003315DD /* Project object */;
 }
