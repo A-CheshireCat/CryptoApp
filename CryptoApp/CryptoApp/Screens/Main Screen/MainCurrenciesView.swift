@@ -13,12 +13,28 @@ struct MainCurrenciesView: View {
     @StateObject var viewModel = MainCurrenciesViewModel()
     
     var body: some View {
-        if let itemGroup = viewModel.itemGroups.first {
+        if let itemGroup = viewModel.cryptoCurrenciesRealm.first {
             CurreciesListView(itemGroup: itemGroup)
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                    print("app entering foreground now")
+                    viewModel.connectToCryptoAPI()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                    print("app entering background now")
+                    viewModel.disconnectFromCryptoAPI()
+                }
         } else {
             // For now, if there is no itemGroup, add one here.
             ProgressView().onAppear {
-                viewModel.$itemGroups.append(CryptoGroup())
+                viewModel.$cryptoCurrenciesRealm.append(CryptoGroup())
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                print("app entering foreground now")
+                viewModel.connectToCryptoAPI()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                print("app entering background now")
+                viewModel.disconnectFromCryptoAPI()
             }
         }
     }
@@ -34,26 +50,10 @@ struct CurreciesListView: View {
                 List {
                     ForEach(itemGroup.items) { item in
                         CurrencyRow(item: item)
-                    }.onDelete(perform: $itemGroup.items.remove)
-                        .onMove(perform: $itemGroup.items.move)
+                    }//.onDelete(perform: $itemGroup.items.remove)
                 }
                 .listStyle(GroupedListStyle())
-                .navigationBarTitle("Items", displayMode: .large)
                 .navigationBarBackButtonHidden(true)
-                .navigationBarItems(
-                    leading: self.leadingBarButton,
-                    // Edit button on the right to enable rearranging items
-                    trailing: EditButton())
-                // Action bar at bottom contains Add button.
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        // The bound collection automatically
-                        // handles write transactions, so we can
-                        // append directly to it.
-                        $itemGroup.items.append(CryptoCurrency())
-                    }) { Image(systemName: "plus") }
-                }.padding()
             }
         }
     }
@@ -66,18 +66,25 @@ struct CurrencyRow: View {
         HStack{
             VStack{
                 HStack{
-                    Image(systemName: "cat")
+                    AsyncImage(url: URL(string: item.imageName)){ result in
+                        result.image?
+                            .resizable()
+                            .scaledToFill()
+                    }
+                    .frame(width: 20, height: 20)
                     Text(item.name)
                     Text(item.shorthand)
                     Spacer()
                 }
                 HStack{
-                    Text("min: \(item.minValue)")
-                    Text("max: \(item.maxValue)")
+                    Text("min: " + String(format: "%g", item.minValue))
+                        .lineLimit(1)
+                    Text("max: " + String(format: "%g", item.maxValue))
+                        .lineLimit(1)
                     Spacer()
                 }
             }
-            Text("\(item.currentValue)")
+            Text(String(format: "%g", item.currentValue))
                 .padding(5)
                 .background(Color(item.currentValue>item.formerValue ? .green : .red))
         }
