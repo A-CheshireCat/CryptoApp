@@ -9,25 +9,10 @@ import RealmSwift
 import SwiftUI
 
 struct MainCurrenciesView: View {
-    @State var searchFilter: String = ""
     @StateObject var viewModel = MainCurrenciesViewModel()
     
     var body: some View {
-        if let itemGroup = viewModel.cryptoCurrenciesRealm.first {
-            CurreciesListView(itemGroup: itemGroup)
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                    print("app entering foreground now")
-                    viewModel.connectToCryptoAPI()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                    print("app entering background now")
-                    viewModel.disconnectFromCryptoAPI()
-                }
-        } else {
-            // For now, if there is no itemGroup, add one here.
-            ProgressView().onAppear {
-                viewModel.$cryptoCurrenciesRealm.append(CryptoGroup())
-            }
+        CurreciesListView()
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                 print("app entering foreground now")
                 viewModel.connectToCryptoAPI()
@@ -36,21 +21,20 @@ struct MainCurrenciesView: View {
                 print("app entering background now")
                 viewModel.disconnectFromCryptoAPI()
             }
-        }
     }
 }
 
 struct CurreciesListView: View {
-    @ObservedRealmObject var itemGroup: CryptoGroup
+    @ObservedResults(CryptoCurrency.self) var currencies
     
     var leadingBarButton: AnyView?
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(itemGroup.items) { item in
+                    ForEach(currencies) { item in
                         CurrencyRow(item: item)
-                    }//.onDelete(perform: $itemGroup.items.remove)
+                    }
                 }
                 .listStyle(GroupedListStyle())
                 .navigationBarBackButtonHidden(true)
@@ -60,7 +44,9 @@ struct CurreciesListView: View {
 }
 
 struct CurrencyRow: View {
-    @ObservedRealmObject var item: CryptoCurrency
+    var item: CryptoCurrency
+    @State private var opacity: Double = 1.0
+    @State private var color: Color = .white
     
     var body: some View {
         HStack{
@@ -86,7 +72,25 @@ struct CurrencyRow: View {
             }
             Text(String(format: "%g", item.currentValue))
                 .padding(5)
-                .background(Color(item.currentValue>item.formerValue ? .green : .red))
+                .background(Color(color))
+                .opacity(opacity)
+                .onChange(of:item.currentValue) {
+                    withAnimation(.linear(duration: 0.5)) {
+                        opacity = 0.0
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                        withAnimation(.linear(duration: 0)) {
+                            opacity = 1.0
+                            if item.currentValue < item.formerValue {
+                                color = .red
+                            } else if item.currentValue > item.formerValue {
+                                color = .green
+                            } else {
+                                color = .white
+                            }
+                        }
+                    })
+                }
         }
     }
 }
