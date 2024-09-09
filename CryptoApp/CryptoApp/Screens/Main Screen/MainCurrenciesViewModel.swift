@@ -47,7 +47,9 @@ class MainCurrenciesViewModel: ObservableObject, CryptoDelegate {
                                                                                 ["name": coin.name,
                                                                                  "imageName": coin.imageUrl ?? "",
                                                                                  "shorthand": coin.code,
-                                                                                 "currentValue": coin.price],
+                                                                                 "currentValue": coin.price,
+                                                                                 "minValue": coin.price,
+                                                                                 "maxValue": coin.price],
                                                                             update: .modified)
                     realm.add(cryptoCurrency)
                 }
@@ -61,7 +63,14 @@ class MainCurrenciesViewModel: ObservableObject, CryptoDelegate {
             guard let currencyToUpdate = self?.realm.objects(CryptoCurrency.self).where({ $0.name == coin.name }).first else {return}
             print("currency to update: \(currencyToUpdate)")
             try! self?.realm.write {
+                currencyToUpdate.formerValue = currencyToUpdate.currentValue
                 currencyToUpdate.currentValue = coin.price
+                if coin.price > currencyToUpdate.maxValue {
+                    currencyToUpdate.maxValue = coin.price
+                }
+                if coin.price < currencyToUpdate.minValue {
+                    currencyToUpdate.minValue = coin.price
+                }
             }
         }
     }
