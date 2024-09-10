@@ -33,7 +33,7 @@ struct CurreciesListView: View {
             VStack {
                 List {
                     ForEach(currencies) { item in
-                        CurrencyRow(item: item)
+                        CurrencyRow(currency: item)
                     }
                 }
                 .listStyle(GroupedListStyle())
@@ -44,46 +44,46 @@ struct CurreciesListView: View {
 }
 
 struct CurrencyRow: View {
-    var item: CryptoCurrency
+    var currency: CryptoCurrency
     @State private var opacity: Double = 1.0
     @State private var color: Color = .white
     
     var body: some View {
-        HStack{
-            VStack{
-                HStack{
-                    AsyncImage(url: URL(string: item.imageName)){ result in
+        HStack {
+            VStack {
+                HStack {
+                    AsyncImage(url: URL(string: currency.imageName)) { result in
                         result.image?
                             .resizable()
                             .scaledToFill()
                     }
                     .frame(width: 20, height: 20)
-                    Text(item.name)
-                    Text(item.shorthand)
+                    Text(currency.name)
+                    Text(currency.code)
                     Spacer()
                 }
-                HStack{
-                    Text("min: " + String(format: "%g", item.minValue))
+                HStack {
+                    Text("min: " + String(format: "%g", currency.minValue))
                         .lineLimit(1)
-                    Text("max: " + String(format: "%g", item.maxValue))
+                    Text("max: " + String(format: "%g", currency.maxValue))
                         .lineLimit(1)
                     Spacer()
                 }
             }
-            Text(String(format: "%g", item.currentValue))
+            Text(String(format: "%g", currency.currentValue))
                 .padding(5)
                 .background(Color(color))
                 .opacity(opacity)
-                .onChange(of:item.currentValue) {
+                .onChange(of:currency.currentValue) {
                     withAnimation(.linear(duration: 0.5)) {
                         opacity = 0.0
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                         withAnimation(.linear(duration: 0)) {
                             opacity = 1.0
-                            if item.currentValue < item.formerValue {
+                            if currency.currentValue < currency.formerValue {
                                 color = .red
-                            } else if item.currentValue > item.formerValue {
+                            } else if currency.currentValue > currency.formerValue {
                                 color = .green
                             } else {
                                 color = .white

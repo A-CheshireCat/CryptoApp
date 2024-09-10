@@ -15,8 +15,8 @@ final class CryptoCurrency: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
     
     @Persisted var imageName = ""
-    @Persisted var name = "CatCoin"
-    @Persisted var shorthand = "CC"
+    @Persisted var name = ""
+    @Persisted var code = ""
     @Persisted var currentValue = 0.0
     @Persisted var formerValue = 0.0
     @Persisted var minValue = 0.0

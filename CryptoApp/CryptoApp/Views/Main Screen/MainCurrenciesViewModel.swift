@@ -23,30 +23,36 @@ class MainCurrenciesViewModel: ObservableObject, CryptoDelegate {
     }
     
     func connectToCryptoAPI() {
-        cryptoAPI = Crypto(delegate: self)
-        var _ = cryptoAPI.connect()
+        var result = cryptoAPI.connect()
+    
+        switch result {
+        case .success(let connected):
+            if !connected {
+                print("API returned false")
+            }
+        case .failure(let error):
+            print("API returned error: \(error)")
+        }
         
         print("API connected")
     }
     
     func disconnectFromCryptoAPI() {
         cryptoAPI.disconnect()
-        
         print("API disconnected")
     }
 
     func cryptoAPIDidConnect() {
-        // get all coins on connect if the realm is empty
+        // Get all coins on connect if the realm is empty
         if realm.objects(CryptoCurrency.self).count == 0 {
             let coins = cryptoAPI.getAllCoins()
             coins.forEach { coin in
-                print("\(coin)")
                 try! realm.write {
                     // Use the .create method with `update: .modified` to copy the existing object into the realm
                     let cryptoCurrency = realm.create(CryptoCurrency.self, value:
                                                                                 ["name": coin.name,
                                                                                  "imageName": coin.imageUrl ?? "",
-                                                                                 "shorthand": coin.code,
+                                                                                 "code": coin.code,
                                                                                  "currentValue": coin.price,
                                                                                  "minValue": coin.price,
                                                                                  "maxValue": coin.price],
@@ -58,6 +64,7 @@ class MainCurrenciesViewModel: ObservableObject, CryptoDelegate {
     }
     
     func cryptoAPIDidUpdateCoin(_ coin: CryptoAPI.Coin) {
+        // TODO: Why is this not received on main and caused thread issues?
         DispatchQueue.main.async { [weak self] in
             print("new coin: \(coin)")
             guard let currencyToUpdate = self?.realm.objects(CryptoCurrency.self).where({ $0.name == coin.name }).first else {return}

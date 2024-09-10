@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		96380E302C8A281A00DE0144 /* MainCurrenciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96380E2F2C8A281A00DE0144 /* MainCurrenciesViewModel.swift */; };
+		96380E352C902E2200DE0144 /* CryptoAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96380E342C902E2200DE0144 /* CryptoAPI.xcframework */; };
 		96CA7C3F2C889968003315DD /* CryptoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CA7C3E2C889968003315DD /* CryptoAppApp.swift */; };
 		96CA7C412C889968003315DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CA7C402C889968003315DD /* ContentView.swift */; };
 		96CA7C432C889970003315DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96CA7C422C889970003315DD /* Assets.xcassets */; };
 		96CA7C462C889970003315DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96CA7C452C889970003315DD /* Preview Assets.xcassets */; };
 		96CA7C502C88CDA7003315DD /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 96CA7C4F2C88CDA7003315DD /* RealmSwift */; };
-		96CA7C532C88CE72003315DD /* CryptoAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CA7C522C88CE72003315DD /* CryptoAPI.xcframework */; };
 		96CA7C582C8A0CB7003315DD /* CryptoCurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CA7C572C8A0CB7003315DD /* CryptoCurrencyModel.swift */; };
 		96CA7C5B2C8A1087003315DD /* MainCurrenciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CA7C5A2C8A1087003315DD /* MainCurrenciesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		96380E2F2C8A281A00DE0144 /* MainCurrenciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCurrenciesViewModel.swift; sourceTree = "<group>"; };
+		96380E342C902E2200DE0144 /* CryptoAPI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CryptoAPI.xcframework; path = Frameworks/CryptoAPI.xcframework; sourceTree = "<group>"; };
 		96CA7C3B2C889968003315DD /* CryptoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CA7C3E2C889968003315DD /* CryptoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAppApp.swift; sourceTree = "<group>"; };
 		96CA7C402C889968003315DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		96CA7C422C889970003315DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96CA7C452C889970003315DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		96CA7C522C88CE72003315DD /* CryptoAPI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CryptoAPI.xcframework; path = ../../../../Downloads/Challenge/CryptoAPI.xcframework; sourceTree = "<group>"; };
 		96CA7C572C8A0CB7003315DD /* CryptoCurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrencyModel.swift; sourceTree = "<group>"; };
 		96CA7C5A2C8A1087003315DD /* MainCurrenciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCurrenciesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -36,7 +36,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96CA7C502C88CDA7003315DD /* RealmSwift in Frameworks */,
-				96CA7C532C88CE72003315DD /* CryptoAPI.xcframework in Frameworks */,
+				96380E352C902E2200DE0144 /* CryptoAPI.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				96CA7C562C8A0C88003315DD /* Model */,
-				96CA7C592C8A0FF6003315DD /* Screens */,
+				96CA7C592C8A0FF6003315DD /* Views */,
 				96CA7C3E2C889968003315DD /* CryptoAppApp.swift */,
 				96CA7C402C889968003315DD /* ContentView.swift */,
 				96CA7C422C889970003315DD /* Assets.xcassets */,
@@ -93,7 +93,7 @@
 		96CA7C512C88CE71003315DD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96CA7C522C88CE72003315DD /* CryptoAPI.xcframework */,
+				96380E342C902E2200DE0144 /* CryptoAPI.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -106,12 +106,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		96CA7C592C8A0FF6003315DD /* Screens */ = {
+		96CA7C592C8A0FF6003315DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				96380E2E2C8A27F900DE0144 /* Main Screen */,
 			);
-			path = Screens;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
